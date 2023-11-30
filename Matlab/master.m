@@ -99,4 +99,4 @@ gen_figures_tables
 % gen_macros
 
 % export selected simulation to stata
-tostata
+% tostata
