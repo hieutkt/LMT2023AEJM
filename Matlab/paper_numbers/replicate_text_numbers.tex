@@ -1,0 +1,169 @@
+ \documentclass[12pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[latin1]{inputenc}
+\usepackage[OT1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{pgf}
+\usepackage{xcolor}
+\usepackage[hidelinks,breaklinks=true]{hyperref}
+\usepackage[hyphenbreaks]{breakurl}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!75!black},
+	urlcolor={blue!75!black},
+	citecolor={blue!75!black},
+}
+\usepackage{pgfkeys}	
+\usepackage{graphicx,color,epsfig}
+\usepackage{epsf}
+\usepackage{psfrag}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{calc}
+\usepackage{moreverb}
+\usepackage{keyval}
+\usepackage{abstract}
+\usepackage{array}
+\usepackage{varioref}
+\usepackage{epsfig}
+\usepackage{epstopdf}  
+\usepackage{eqnarray}
+\usepackage{lettrine}
+%\usepackage{caption}
+\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{url}
+\usepackage{epigraph}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{fancyvrb}
+%\usepackage{euroitc}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{threeparttable}
+\usepackage{setspace}
+\usepackage{rotfloat}
+\usepackage{pdflscape}
+\usepackage{boxedminipage}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{textcomp}
+\usepackage{chemarrow}
+\usepackage{mathrsfs}
+\usepackage{marvosym}
+%\usepackage{titling}
+
+%\usepackage{mathtools}
+%\usepackage{txfonts}
+%\usepackage{bbm}
+\usepackage{epstopdf,epsfig}    
+
+\DeclareGraphicsExtensions{.eps}
+\usepackage[stable]{footmisc}
+
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=Latex.dll}
+%TCIDATA{Version=5.50.0.2960}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{LastRevised=Wednesday, May 14, 2014 08:46:51}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%\setlength{\droptitle}{-2em}     
+
+\renewcommand{\tablename}{\textsc{Table}}
+\renewcommand{\figurename}{\textsc{Fig.}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{summary}[theorem]{Summary}
+\newtheorem{solution}[theorem]{Solution}
+\setlength{\tabcolsep}{10pt}
+\setlength{\textwidth}{6.4in} \setlength{\oddsidemargin}{0.1in}
+\setlength{\textheight}{8.7in} \setlength{\topmargin}{-0.5in}
+\renewcommand\baselinestretch{1.2}
+\renewcommand\arraystretch{1.4}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\newcommand{\EDD}[2]{\textbf{{#1}}}
+\newcommand{\EDITCOMMENT}[1]{[\textit{\textcolor{red}{{#1}}}]}
+\graphicspath{ {./Slides/Figures/} }
+%%%%% Eugene's packages
+\usepackage{makecell}
+\usepackage{multirow}
+\input{table_macros_model.tex}
+\input{table_macros_data.tex}
+
+\makeatletter
+\makeatother
+
+\begin{document}
+	
+\section{Introduction}
+
+This document replicates the various numbers cited explicitly in the text. We have provided all the underlying source files such that the user can directly compile this document. Alternatively, the user can run our master file (master.m) first before compiling this document.
+
+\section{Compiled results}
+All replicated numbers are displayed as cited text and referenced graphs where appropriate.
+
+\begin{itemize}
+	\item [Page 2:] ...the economy experiences an aggregate-productivity loss of  over \textbf{one} percent...
+	\begin{itemize}
+		\item Additional comments: This is simply approximated by looking at Figure 3a.
+	\end{itemize}
+	\item [Page 21-22:] The estimated coefficient is close in data and baseline model (approximately \ikVmpkdata in the data and \ikVmpkTwoDP \space in the model). In contrast, the frictionless model significantly overpredicts the responsiveness of firm investment to MRPK, namely by a factor of (approximately) \ikVmpkFactor. 
+	\item [Page 22]: ...showing a substantial degree of lumpiness, and \lumpyCHp \space in our model....
+	\item [Page 22:] ...Specifically, the fraction of lumps is approximately 0.20 in our data and \lumpyBaselinep...
+	\item [Page 22:] ...the standard deviation of (log) MRPK is \sdmprk \space in the data, \sdmpk \space in the baseline model, and \sdmpkF \space in the frictionless model...
+	\item [Page 25:]... Consumption increases by \delC, which---given our assumed preferences---implies an equal decline in the price level. Capital stock, hours in manufacturing, and mass of domestic active firms decrease by approximately 10\%...
+	\begin{itemize}
+		\item Additional comments: ``approximately 10\%'' is simply approximated by looking at Figure 2
+	\end{itemize}
+	\item [Page 25:] ...We find that convergence to the final steady state takes approximately 20 years...
+	\begin{itemize}
+		\item Additional comments: This is an approximate statement as the theoretical convergence is at infinity. From Figure 2, the time series has almost converged at 14 years.
+	\end{itemize}
+	\item [Page 25:] ...import penetration is increasing over time, from around 8\% on impact to around 10\%...
+	\begin{itemize}
+		\item Additional comments: Approximate statement by looking at Figure D2
+	\end{itemize}
+	\item [Page 26:] ...in particular, in the initial stationary equilibrium, capital-reallocation frictions imply that $TFP^{Adj}$ is \ssTFPratio\% higher in the frictionless economy...
+	\item [Page 28:] In our baseline economy, $TFP^{Adj}_t$ falls by \TFPdBaseline\% in response to the import-competition shock and then gradually increases, eventually displaying a long-run increase of approximately \tfpgainsLR\%. In contrast, in the frictionless model, this measure of productivity increases by \TFPdFrictionless\% on impact and then overshoots its long-run level for a few years. As a result of these different dynamics, the gap in $TFP^{Adj}_t$ between the frictionless model and the baseline model, expressed as a percentage of $TFP^{Adj}_0$ in the baseline model, widens from \ssTFPratio\% in stationary equilibrium to \SRTFPratio\% at $t=2$, implying a short-run efficiency loss of \effgap\%. Moreover, the short-run efficiency gap induced by the shock remains sizable for over 5 years after the shock.
+	\item [Page 28:] approximately \inactPospp\% of firms postpone investment. Moreover, firms that invest reduce their investment. For these reasons, the allocation of capital moves further apart from the frictionless
+	\item [Page 29:] As the figure shows, the shock shifts the exit thresholds up, indicating a larger exit flow. The exit rate increases by approximately \exitSR \space percentage points on impact. Moreover, consistent with the patterns of selection in stationary equilibrium, the shock induces selection as a function of both productivity and capital in our baseline model. Specifically, some relatively productive---but small---firms optimally exit. In contrast, in the frictionless model the exit rate increases by approximately \exitSRfrictionless \space percentage points and productivity is the only determinant of exit. The entry rate (flow of entrants at $t$ divided by mass of active firms at $t$) drops by \entrySR \space percentage points in the baseline model, and by \entrySRfrictionless \space percentage points in the frictionless model. 
+	\item [Page 30:] We now decompose the quantitative effects of the intensive (investment) and extensive (selection) margins of reallocation for aggregate productivity. To isolate the role of the intensive margin, we re-evaluate $TFP_2^{Adj}$ assuming that at $t=1$ (in response to the shock) firms use the same decision rules for entry and exit as in the stationary equilibrium, but they use the equilibrium investment decision rules of $t=1$. In this case, we obtain a decline in aggregate productivity of \TFPdBaselineKpr\% relative to the stationary equilibrium in the baseline model and no decline in the frictionless model. Moreover, MRPK dispersion increases by almost \TFPdBaselineMRPK\% in the baseline model.
+	\item [Page 30:] ... we find that the equilibrium selection patterns at $t=1$ contribute positively to aggregate productivity by approximately \TFPdBaselineExt \space percentage points in the baseline model and \TFPdFrictionless \space percentage points in the frictionless model.
+	\item [Page 31:] Quantitatively, the gap in $TFP_t$ between the frictionless model and the baseline model, expressed as a percentage of $TFP_0$ in the baseline model, widens from \ssTFPratioU\% in stationary equilibrium to \SRTFPratioU\% at $t=2$...
+	\item ... the decrease in the number of firms dominates the changes in the allocation of capital and we obtain a \tfpgainsLRU\% decrease in $TFP_t$.
+	\item [Page 31:] We find that accounting for transitional dynamics leads to welfare gains from the trade shock equal to approximately \cev \space of permanent consumption, as consumption gains are partly offset by higher labor input, due to the expansion of the export
+	\item [Page 38:] We feed industry-level shocks in import penetration that induce a standard deviation of prices $P_n$ of approximately 1\%
+	\item [Page 42:] Quantitatively, this version of the model induces a short-run aggregate-productivity ($TFP_t^{Adj}$) loss of \effgapSRNC \space  relative to its frictionless counterpart, i.e. a model with the same parameter values, except for partial irreversibility.
+	\item [Page 42:] When we hit this economy with the trade shock, we find that aggregate productivity ($TFP_t^{Adj}$) displays a small increase on impact (approximately \TFPdNoEta\%) and a larger increase in the frictionless version of the model (approximately \TFPdNoEtaFrictionless\%). 
+	\item [Page 42:] ...we find that the contribution of the intensive margin is similar to our baseline model (approximately -\TFPdNoEtaKpr\%, which also induces a similar increase in MRPK dispersion)...
+	\item [Page 42:] ...the overall short-run gap in $TFP_t^{Adj}$ due to reallocation frictions is similar to our baseline result (approximately \effgapNoEta\%).
+	\item [Page XLV:] ...at the cost of worsening the fit of some other moments, in particular the dispersion of investment rates increases from approximately 0.8 to approximately 1.
+\end{itemize}
+
+
+\end{document}
