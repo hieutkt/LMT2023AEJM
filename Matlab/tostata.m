@@ -2,7 +2,9 @@ clc
 clear
 
 in_path = 'mat_files_compiled/baseline/mat_files/results/';
-out_path_stata = '../stata_replication/Data/';
+
+mkdir('../stata_replication/Data/output/')
+out_path_stata = '../stata_replication/Data/output/';
 
 load([in_path 'stats_data.mat'])
 
