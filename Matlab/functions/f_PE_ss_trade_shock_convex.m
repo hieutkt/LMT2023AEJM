@@ -13,6 +13,7 @@
 function output_moment = f_PE_ss_trade_shock_convex(par_in,file_out,file_suffix)
 
 %% parameters and grids: set baseline parameter
+disp("[f_PE_ss_trade_shock_convex.m] Setting up parameters & grid...")
 
 %%% retrieve baseline parameters and grid sizes
 output  = mainfuncMP_convex([],[],[],[],1,par_in); 
@@ -42,6 +43,9 @@ Pf = par_in.Pf;
 par2 = par;
 
 %%% Solve GE via bisection
+disp("[f_PE_ss_trade_shock_convex.m] We're going to vary P to clear C, holding fix M at autarky value.")
+disp("[f_PE_ss_trade_shock_convex.m] Solve GE via bisection...")
+
 P_guess = zeros(1000,1);
 new_C_store = zeros(1000,1);
 itermax = 1000;
@@ -117,22 +121,26 @@ for iter=1:itermax
     P_guess(iter) = 1/(((1-relx)*lc + relx*rc)*par2.chi);
     Pnow = P_guess(iter);
 
+    % In stead of plotting with interupt the screen with popups, I just print things out here
+    disp(sprintf("     Iteration %d: C = %d, 𝚫C = %d, P = %d", iter, new_C, Pnow, diff_C))
+
     % plot progress
-    subplot(311)
-    drawnow
-    hold on
-    plot(iter,diff_C,'x');
-    subplot(312)
-    plot(iter,Pnow,'x');
-    drawnow
-    hold on
-    subplot(313)
-    plot(iter,new_C,'x');
-    drawnow
-    hold on
+    % subplot(311)
+    % drawnow
+    % hold on
+    % plot(iter,diff_C,'x');
+    % subplot(312)
+    % plot(iter,Pnow,'x');
+    % drawnow
+    % hold on
+    % subplot(313)
+    % plot(iter,new_C,'x');
+    % drawnow
+    % hold on
+
     
     % print progress to screen
-    disp(diff_C);
+    % disp(diff_C);
     
     % update tolerance as market clearing error declines
     if abs(diff_C)<10
@@ -146,7 +154,9 @@ for iter=1:itermax
 end
 close all
 
-% compute moments
+%% compute moments
+disp("[f_PE_ss_trade_shock_convex.m] Computing the relevant moments...")
+
 par2 = par;
 par2.P  = Pnow;
 par2.Q  = Pss_notrade;
@@ -156,7 +166,9 @@ pol.cf_i = cf_i;
 output_moment = get_moments_convex(par2,N,gr,Px,pol,1);
 
 
-% export full workspace
+%% export full workspace
+disp(sprintf("[f_PE_ss_trade_shock_convex.m] export the workspace to %d/ss_tradeshock or Pss_tradeshock...", file_out))
+
 if nargin==3
     % file path and suffix supplied
     save([file_out '/ss_tradeshock' file_suffix])

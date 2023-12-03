@@ -27,6 +27,8 @@
 function model_baseline(model)
 
 %% Housekeeping
+disp('[baseline.m] House keeping; Initializing parameters')
+
 clc
 close all
 
@@ -64,10 +66,13 @@ par_in.mu_fstay_a = 0;
 par_in.mu_fenter_a = 0;
 
 % load calibrated baseline parameters
+disp('[baseline.m] Loading calibrated baseline parameters')
+disp('    common_mat_files/xstar_dM_source/xstar_convex_ik.mat -> xout')
+
 load('common_mat_files/xstar_dM_source/xstar_convex_ik.mat', 'xout')
 x0 = xout;
-xstar(1)            = x0(1);
-xstar(2)            = x0(2);
+xstar(1)            = x0(1);            % Lambda
+xstar(2)            = x0(2);            % Zeta
 par_in.c1           = x0(3);
 par_in.eta(1)       = x0(4);
 par_in.eta(2)       = x0(5);
@@ -83,31 +88,33 @@ par_in.C_f = 0;
 switch model
     
     case 'baseline'
+        disp('[baseline.m] Baseline case: q < Q; ζ > 0...')
         % q<Q , zet>0
         par_in.lam = xstar(1);
         par_in.zet = xstar(2);
         
-        disp('Solving model with frictions')
 
     case 'frictionless'
+        disp('[baseline.m] Frictionless case: q = Q; ζ = 0...')
         % q=Q , zet=0
         par_in.lam = 0;
         par_in.zet = 0;
-        
-        disp('Solving model without frictions')
-        
 end
 
 
 %% Run the steady states and transitions
 
 %%% solve closed economy steady-state
+
+disp("[baseline.m] We're solving the closed economy steady-state...")
 switch model
     case 'baseline'
-        
+
+        disp("[baseline.m] compute the closed moments; entering f_PE_ss_autarky_convex...")
         closed_moments = f_PE_ss_autarky_convex(par_in,mat_out,'_baseline');
         
         % save measure of entrants (for frictionless model)
+        disp("[baseline.m] The measure of entrants are saved for the frictionless case...")
         load([mat_out '/ss_autarky_baseline'], 'Me_new');
         Mnow = Me_new;
         save([mat_out '/Mnow'], 'Mnow')
@@ -127,7 +134,10 @@ switch model
 end
 
 %%% solve open economy steady-state
-    % load prices from autarky
+
+disp("[baseline.m] Now we're solving the closed economy steady-state...")
+disp("[baseline.m] Loading prices, #entrants and kmax from the autarky model...")
+
 switch model
     case 'baseline'
         load([mat_out '/Pss_autarky_baseline'], 'Pnow')
@@ -159,9 +169,11 @@ clear Pnow kmax_autarky Mnow
     % solve model
 switch model
     case{'baseline'}
+        disp("[baseline.m] Solve the model; entering f_PE_ss_trade_shock_convex...")
         opened_moments = f_PE_ss_trade_shock_convex(par_in,mat_out,'_baseline');
         
     case{'frictionless'}
+        disp("[baseline.m] Solve the model; entering f_PE_ss_trade_shock...")
         opened_moments = f_PE_ss_trade_shock(par_in,mat_out,'_baseline');
         
 end
@@ -174,9 +186,11 @@ t_trans.fixedR = par_in.fixedR;
 t_trans.Q = par_in.Q;
 switch model
     case 'baseline'
+        disp("[baseline.m] Computing the transition path; entering f_transition_mkt_convex...")
         f_transition_mkt_convex('ss_autarky_baseline','ss_tradeshock_baseline',mat_out,t_trans,'_baseline')
         
     case 'frictionless'
+        disp("[baseline.m] Computing the transition path; entering f_transition_mkt...")
         f_transition_mkt('ss_autarky_q1_baseline','ss_tradeshock_q1_baseline',mat_out,t_trans,'_baseline')
 end
 

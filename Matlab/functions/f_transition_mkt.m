@@ -7,6 +7,9 @@ function f_transition_mkt(init_ss,final_ss,file_out,trans_x,file_suffix)
 %   3. Iterate one time step again, check market clearing. If so, move
 %   forward again.
 
+
+disp("[f_transition_mkt.m] Setting up grids...")
+
 if nargin==2
     file_in = [];
 elseif nargin>=3
@@ -32,6 +35,8 @@ diff_C_t = zeros(T,1);
 diff_C_t_old = diff_C_t;
 
 % load initial steady state
+disp("[f_transition_mkt.m] Load the initial steady state...")
+
 load([file_in init_ss], 'Px', 'par2', 'gr', 'N', 'Pnow', 'old_C')
 g0_autarky = squeeze(Px.g_ss);
 P_autarky = Pnow;
@@ -53,6 +58,8 @@ end
 clear Px Pnow par gr new_C
 
 % load final steady state
+disp("[f_transition_mkt.m] Load the final steady state...")
+
 load([file_in final_ss], 'initval', 'pol', 'par2', 'Pf', 'dM', 'Pnow', 'old_C')
 vf_t{end} = initval.Ev;
 pol_t{end} = pol;
@@ -92,6 +99,7 @@ par_t0.fixedR = trans_x.fixedR;
 
 
 %% solve time path
+disp("[f_transition_mkt.m] Solving for the tranistion path...")
 
 iter_max = 200;
 tol_x = 1e-5;
@@ -271,18 +279,20 @@ for iter = 1:iter_max
     
     % check convergence using prices
     diff_P_t = P_t_new - P_t;
-    
-    close all
-    subplot(311)
-    plot(diff_P_t)
-    subplot(312)
-    hold on
-    plot(diff_C_t_old)
-    plot(diff_C_t)
-    hold off
-    subplot(313)
-    plot(1:T,P_t,1:T,P_t_new)
-    drawnow
+
+    disp(sprintf("    Iteration %d: P = %d, 𝚫P = %d", iter, P_t_new, diff_P_t))
+
+    % close all
+    % subplot(311)
+    % plot(diff_P_t)
+    % subplot(312)
+    % hold on
+    % plot(diff_C_t_old)
+    % plot(diff_C_t)
+    % hold off
+    % subplot(313)
+    % plot(1:T,P_t,1:T,P_t_new)
+    % drawnow
    
     if max(abs(diff_P_t(:)))<10*tol_x
         tol_c = 1e-3;
@@ -352,6 +362,7 @@ for iter = 1:iter_max
 end
 
 %% Compute statistics along transition path
+disp("[f_transition_mkt.m] Computing the statistics along transition path...")
 
 C_t = zeros(T-1,1);
 Cd_t = zeros(T-1,1);
@@ -645,6 +656,7 @@ end
 
 
 %% export full workspace
+disp(sprintf("[f_transition_mkt.m] export full workspace to %d/transition*", file_out))
 
 clear gr_t vf_t
 if nargin==5

@@ -5,7 +5,7 @@
 %   For each model, run the "baseline" before "frictionless"
 %
 %%%%%%%%%%%%%
-
+tic
 clear
 clc
 close all
@@ -36,17 +36,22 @@ model_baseline('baseline')
 model_baseline('frictionless')
 extract_outputs('baseline/mat_files','ss_autarky_baseline','ss_tradeshock_baseline','transition_baseline','ss_autarky_q1_baseline','ss_tradeshock_q1_baseline','transition_q1_baseline','uniform')
 %     % run event study + i/k vs mrpk elasticity
+% disp("[REPLICATE NOTE] run event study + i/k vs mrpk elasticity")
 % event_study('ss_autarky_baseline')
 % event_study('ss_autarky_q1_baseline')
 %     % move outputs to combined folder
+% disp("[REPLICATE NOTE] move outputs to combined folder")
 % i_success = movefile('baseline','mat_files_compiled');
 %     % decomposition exercise: baseline calibration
+% disp("[REPLICATE NOTE] decomposition exercise: baseline calibration")
 % model_recreate_transition('baseline','baseline calibration')
 % model_recreate_transition('frictionless','baseline calibration')
 %     % multi-industry trade shock (serial)
+% disp("[REPLICATE NOTE] multi-industry trade shock (serial)")
 % model_trade_shock_baseline_serial('mat_files_compiled/baseline/mat_files')
 % model_trade_shock_frictionless_serial('mat_files_compiled/baseline/mat_files')
 %     % compile event study mat files with multi-industry trade shock
+% disp("[REPLICATE NOTE] compile event study mat files with multi-industry trade shock")
 % i_success = movefile('mat_files_compiled/baseline/mat_files/event_plots.mat','mat_files_compiled/baseline/mat_files/results');
 % i_success = movefile('mat_files_compiled/baseline/mat_files/event_plots_q1.mat','mat_files_compiled/baseline/mat_files/results');
 
@@ -90,14 +95,20 @@ extract_outputs('baseline/mat_files','ss_autarky_baseline','ss_tradeshock_baseli
 % i_success = movefile('fixed_cost','mat_files_compiled');
 
 % move recreated workspace to combined folder
+disp("[REPLICATE NOTE] move recreated workspace to combined folder")
 i_success = movefile('Recreated_workspace','mat_files_compiled');
 
 % Plot / construct all figures and tables
+disp("[REPLICATE NOTE] Plot / construct all figures and tables")
 gen_figures_tables
 
 % generate macros used in table
+% disp("[REPLICATE NOTE] generate macros used in table")
 % gen_macros
 
 % export selected simulation to stata
-disp("export selected simulation to stata")
-tostata
+% disp("[REPLICATE NOTE] export selected simulation to stata")
+% tostata
+
+% toc
+toc

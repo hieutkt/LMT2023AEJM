@@ -15,6 +15,7 @@
 function output_moment = f_PE_ss_trade_shock(par_in,file_out,file_suffix)
 
 %% parameters and grids: set baseline parameter
+disp("[f_PE_ss_trade_shock.m] Setting up parameters & grid...")
 
 %%% retrieve baseline parameters and grid sizes
 try
@@ -54,6 +55,10 @@ end
 
 %% Solve GE
    
+disp("[f_PE_ss_trade_shock.m] We're going to vary P to clear C, holding fix M at autarky value.")
+disp("[f_PE_ss_trade_shock.m] Solve GE via bisection...")
+
+
 % form par2 structure
 par2 = par;
 
@@ -148,22 +153,25 @@ for iter=1:itermax
     P_guess(iter) = 1/(((1-relx)*lc + relx*rc)*par2.chi);
     Pnow = P_guess(iter);
 
-    % plot progress
-    subplot(311)
-    drawnow
-    hold on
-    plot(iter,diff_C,'x');
-    subplot(312)
-    plot(iter,Pnow,'x');
-    drawnow
-    hold on
-    subplot(313)
-    plot(iter,new_C,'x');
-    drawnow
-    hold on
+    % In stead of plotting with interupt the screen with popups, I just print things out here
+    disp(sprintf("     Iteration %d: C = %d, 𝚫C = %d, P = %d", iter, new_C, Pnow, diff_C))
 
-    % print to screen progression
-    disp(diff_C);
+    % % plot progress
+    % subplot(311)
+    % drawnow
+    % hold on
+    % plot(iter,diff_C,'x');
+    % subplot(312)
+    % plot(iter,Pnow,'x');
+    % drawnow
+    % hold on
+    % subplot(313)
+    % plot(iter,new_C,'x');
+    % drawnow
+    % hold on
+
+    % % print to screen progression
+    % disp(diff_C);
     
     if abs(diff_C)<10
         relx=.1;
@@ -223,4 +231,7 @@ else
     end
 end
 
+
+
+end
 

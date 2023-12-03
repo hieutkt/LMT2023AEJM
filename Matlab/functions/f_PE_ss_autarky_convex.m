@@ -12,6 +12,8 @@ function output_moment = f_PE_ss_autarky_convex(par_in,file_out,file_suffix)
 
 %% parameters and grids: set baseline parameter
 
+disp("[f_PE_ss_autarky_convex.m] Setup parameters and grids...")
+
 % retrieve baseline parameters and grid sizes
 output  = mainfuncMP_convex([],[],[],[],1,par_in);
 par     = output.par;
@@ -24,7 +26,11 @@ Pnow        = par_in.new_Pnow;
 
 
 %% Solve GE
-   
+
+
+disp("[f_PE_ss_autarky_convex.m] Solving individuals' problem...")
+disp("    We're repeatedly solve until k grid is of appropriate size...")
+
 % form par2 structure to avoid changing parameter input structure
 par2 = par;
 

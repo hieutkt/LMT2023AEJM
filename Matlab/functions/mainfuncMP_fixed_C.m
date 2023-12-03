@@ -319,7 +319,7 @@ function grids = setgrid(par,N)
         try
             if t==1
                 grids.k_grid = par.k_grid;
-                disp('t=1')
+                % disp('t=1')
             end
         catch
 %             disp('solve stationary model')
