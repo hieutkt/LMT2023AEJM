@@ -40,7 +40,7 @@ mkdir(mat_out);
 par_in.save = 1;
 
 % calibrating or solving model?
-par_in.cali = 1;
+par_in.cali = 0;
 
 % fixed R (PE) or vary R (GE)?
 par_in.fixedR = 0;
