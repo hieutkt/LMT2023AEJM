@@ -307,6 +307,35 @@ try
     grid on
     print('CHY_figures/fig_10_baseline_exit','-depsc')
 
+    %%% Figure 5 %%%
+
+    % Figure 5a: Uncorrected TFP
+    figure
+    % graphical correction
+    ws_plots_baseline.TFPQ_uncorrected_t_q1(2) = ws_plots_baseline.TFPQ_uncorrected_t_q1(1);
+    hold on
+    plot(0:T-1,100*(ws_plots_baseline.TFPQ_uncorrected_t_qb(1:T)/ws_plots_baseline.TFPQ_uncorrected_t_qb(1)-1), 'Color', xblue,'linewidth',3)
+    plot(0:T-1,100*(ws_plots_baseline.TFPQ_uncorrected_t_q1(1:T)/ws_plots_baseline.TFPQ_uncorrected_t_q1(1)-1), '--', 'Color', xred,'linewidth',3)
+    hold off
+    ylabel('TFP ($\% \Delta$ from s.s.)','FontSize',24,'interpreter','latex')
+    xlabel('Years','FontSize',24,'interpreter','latex')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','northeast')
+    grid on
+    print('CHY_figures/fig_11_baseline_TFP_uncorrected','-depsc')
+
+    % Figure 5b: Normalizing measure
+    figure
+    hold on
+    plot(0:T-1,100*(1./(ws_plots_baseline.M_norm_t_qb(1:T)/ws_plots_baseline.M_norm_t_qb(1))-1), 'Color', xblue,'linewidth',3)
+    plot(0:T-1,100*(1./(ws_plots_baseline.M_norm_t_q1(1:T)/ws_plots_baseline.M_norm_t_q1(1))-1), '--', 'Color', xred,'linewidth',3)
+    hold off
+    ylabel('Normalizing Measure ($\% \Delta$ from s.s.)','FontSize',24,'interpreter','latex')
+    xlabel('Years','FontSize',24,'interpreter','latex')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
+    grid on
+    print('CHY_figures/fig_12_baseline_normalizing_m','-depsc')
+
+
 
     %% Main text tables
     disp("[CHY_gen_figures_tables.m] Replicating Table 1 in main text...")
