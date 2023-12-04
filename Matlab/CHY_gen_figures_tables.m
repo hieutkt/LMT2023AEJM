@@ -187,9 +187,9 @@ try
     plot(0:T-1,100*(ws_plots_baseline.P_plot_q1(1:T)/ws_plots_baseline.P_plot_q1(1)-1), '--', 'Color', xred,'linewidth',3)
     ylabel('$P$ (\% $\Delta$ from s.s.)','FontSize',24,'interpreter','latex')
     xlabel('Years','FontSize',24,'interpreter','latex')
-    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','northeast')
     grid on
-    axis([0 T-1 -7 0])
+    axis([0 T-1 0 7])
     hold off
     print('CHY_figures/fig_03_baseline_P','-depsc')
 
@@ -202,7 +202,7 @@ try
     xlabel('Years','FontSize',24,'interpreter','latex')
     legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
     grid on
-    axis([0 T-1 -12 0])
+    axis([0 T-1 0 12])
     hold off
     print('CHY_figures/fig_04_baseline_K','-depsc')
 
@@ -227,9 +227,85 @@ try
     xlabel('Years','FontSize',24,'interpreter','latex')
     legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
     grid on
-    axis([0 T-1 -10 0])
+    axis([0 T-1 0 10])
     hold off
     print('CHY_figures/fig_06_baseline_M','-depsc')
+
+
+    %%% Figure 3 %%%
+
+    % Figure 3a: Agg TFP
+    figure
+    hold on
+    plot(0:T-1,100*(ws_plots_baseline.TFPQ_t_qb(1:T)/ws_plots_baseline.TFPQ_t_qb(1)-1), 'Color', xblue,'linewidth',3)
+    plot(0:T-1,100*(ws_plots_baseline.TFPQ_t_q1(1:T)/ws_plots_baseline.TFPQ_t_q1(1)-1), '--', 'Color', xred,'linewidth',3)
+    hold off
+    ylabel('$TFP^{Adj}$($\% \Delta$ from s.s.)','FontSize',24,'interpreter','latex')
+    xlabel('Years','FontSize',24,'interpreter','latex')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
+    grid on
+    print('CHY_figures/fig_07_baseline_TFP','-depsc')
+
+    % Figure 3b: sd mrpk
+    figure
+    hold on
+    plot(0:T-1,100*(ws_plots_baseline.sdmpk_t_qb(1:T)/ws_plots_baseline.sdmpk_t_qb(1)-1), 'Color', xblue,'linewidth',3)
+    plot(0:T-1,100*(ws_plots_baseline.sdmpk_t_q1(1:T)/ws_plots_baseline.sdmpk_t_q1(1)-1), '--', 'Color', xred,'linewidth',3)
+    hold off
+    ylabel('s.d. of MRPK ($\% \Delta$ from s.s.)','FontSize',24,'interpreter','latex')
+    xlabel('Years','FontSize',24,'interpreter','latex')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','northeast')
+    grid on
+    print('CHY_figures/fig_08_baseline_sd_mrpk','-depsc')
+
+    %%% Figure 4 %%%
+
+    % Figure 4a: Inaction region Before / After trade shock
+    s_new = (gr_qb_baseline.s_grid(1)):.1:gr_qb_baseline.s_grid(end);
+    k_up_new = interp1((gr_qb_baseline.s_grid),out_qb.k_up_threshold,s_new,'pchip','extrap');
+    k_up_new_trade = interp1((gr_qb_baseline.s_grid),out_qb_trade.k_up_threshold,s_new,'pchip','extrap');
+    % plot thresholds: q<Q
+    figure
+    hold on
+    p1 = plot(k_up_new,s_new, 'Color', xblue, 'LineWidth', 3);
+    p2 = plot(out_qb.k_down_threshold,(gr_qb_baseline.s_grid), 'Color', xblue, 'LineWidth', 2);
+    p3 = plot(k_up_new_trade,s_new, '--', 'Color', xblue, 'LineWidth', 3);
+    p4 = plot(out_qb_trade.k_down_threshold,(gr_qb_baseline.s_grid), '--', 'Color', xblue, 'LineWidth', 2);
+    hold off
+    xmin = 4.5;
+    xmax = 7.5;
+    ymin = 0.5;
+    ymax = 11.1;
+    ydif = ymax-ymin;
+    % xmin = 0;
+    % xmax = gr_qb.k_grid(end)-.1;
+    axis([xmin xmax-.1 ymin ymax])
+    grid on
+    xlabel('$k$','FontSize',24,'interpreter','latex')
+    ylabel('$s$','FontSize',24,'interpreter','latex')
+    legend({'$t=0$','$t=0$','$t=1$','$t=1$'},'location','northwest','Fontsize',20,'interpreter','latex')
+    set(get(get(p2,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');
+    set(get(get(p4,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');
+    print('CHY_figures/fig_09_baseline_inaction','-depsc')
+
+    % Figure 4b: Exit
+    figure
+    hold on
+    plot(gr_qb_baseline.k_grid,(out_qb.s_fx_star), 'Color', xblue, 'LineWidth', 3);
+    plot(gr_q1_baseline.k_grid,(out_q1.s_fx_star), 'Color', xred, 'LineWidth', 1);
+    plot(gr_qb_baseline.k_grid,(out_qb_trade.s_fx_star), '--', 'Color', xblue,'LineWidth', 3);
+    plot(gr_q1_baseline.k_grid,(out_q1_trade.s_fx_star), '--', 'Color', xred,'LineWidth', 1);
+    xlabel('$k$','FontSize',24,'interpreter','latex')
+    ylabel('$s$','FontSize',24,'interpreter','latex')
+    legend({'Baseline $t=0$', 'Frictionless $t=0$', 'Baseline, $t=1$', 'Frictionless, $t=1$'},'FontSize',20,'interpreter','latex')
+    hold off
+    xmin = 0;
+    xmax = 0.8;
+    ymin = 0.35;
+    ymax = 1.05;
+    axis([0 xmax-.1 ymin ymax])
+    grid on
+    print('CHY_figures/fig_10_baseline_exit','-depsc')
 
 
     %% Main text tables
