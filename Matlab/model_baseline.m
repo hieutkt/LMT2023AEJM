@@ -53,6 +53,10 @@ switch model
         par_in.Ns = 31;
     case 'frictionless'
         par_in.Ns = 31*5;
+    case 'covid'
+        par_in.Ns = 31;
+    case 'covid_frictionless'
+        par_in.Ns = 31*5;
 end
 par_in.Nk = 1000;
 % par_in.Nk = 10000;
@@ -99,6 +103,21 @@ switch model
         % q=Q , zet=0
         par_in.lam = 0;
         par_in.zet = 0;
+
+
+    case 'covid'
+        disp('[baseline.m] Covid case: q < Q; ζ > 0..., χ = 4.0')
+        % q<Q , zet>0
+        par_in.lam = xstar(1);
+        par_in.zet = xstar(2);
+        par_in.chi = 5.0;
+
+    case 'covid_frictionless'
+        disp('[baseline.m] Frictionless case: q = Q; ζ = 0...')
+        % q=Q , zet=0
+        par_in.lam = 0;
+        par_in.zet = 0;
+        par_in.chi = 5.0;
 end
 
 
@@ -127,10 +146,38 @@ switch model
             disp('Need to solve q<Q first!')
         end
         par_in.Me = Mnow;
-        
+
+        disp("[baseline.m] compute the closed moments; entering f_ss_autarky...")
         closed_moments = f_ss_autarky(par_in,mat_out,'_baseline');
 
         clear Mnow
+
+    case{'covid'}
+        % load the market-clearing mass of potential entrants in steady-state closed economy
+        disp("[baseline.m] compute the closed moments; entering f_PE_ss_autarky_convex...")
+        closed_moments = f_PE_ss_autarky_convex(par_in,mat_out,'_baseline');
+
+        % save measure of entrants (for frictionless model)
+        disp("[baseline.m] The measure of entrants are saved for the frictionless case...")
+        load([mat_out '/ss_autarky_baseline'], 'Me_new');
+        Mnow = Me_new;
+        save([mat_out '/Mnow'], 'Mnow')
+
+
+    case{'covid_frictionless'}
+        % load the correct measure
+        try
+            load([mat_out '/Mnow'],'Mnow')
+        catch
+            disp('Need to solve q<Q first!')
+        end
+        par_in.Me = Mnow;
+
+        disp("[baseline.m] compute the closed moments; entering f_ss_autarky...")
+        closed_moments = f_ss_autarky(par_in,mat_out,'_baseline');
+
+        clear Mnow
+
 end
 
 %%% solve open economy steady-state
@@ -143,27 +190,61 @@ switch model
         load([mat_out '/Pss_autarky_baseline'], 'Pnow')
         
     case 'frictionless'
-        load([mat_out '/Pss_autarky_q1_baseline'], 'Pnow')     
+        load([mat_out '/Pss_autarky_q1_baseline'], 'Pnow')
+
+    case 'covid'
+        load([mat_out '/Pss_autarky_baseline'], 'Pnow')
+
+    case 'covid_frictionless'
+        load([mat_out '/Pss_autarky_baseline'], 'Pnow')
 end
     % load calibrated mass of entrants from autarky
 load([mat_out '/Mnow'],'Mnow')
     % load calibrated mass of foreign firms
 load('common_mat_files/xstar_dM_source/dMf_star.mat', 'dMf_star')
-par_in.dM           = dMf_star;       % mass of foreign firms
-par_in.Pf           = 0.5*Pnow;       % price of foreign goods
-par_in.P_autarky    = Pnow;
-par_in.Me           = Mnow;     % update with measure from closed economy
+
+switch model
+    case 'baseline'
+        par_in.dM           = dMf_star;       % mass of foreign firms
+        par_in.Pf           = 0.5*Pnow;       % price of foreign goods
+        par_in.P_autarky    = Pnow;
+        par_in.Me           = Mnow;     % update with measure from closed economy
+
+    case 'frictionless'
+        par_in.dM           = dMf_star;       % mass of foreign firms
+        par_in.Pf           = 0.5*Pnow;       % price of foreign goods
+        par_in.P_autarky    = Pnow;
+        par_in.Me           = Mnow;     % update with measure from closed economy
+
+    case 'covid'
+        par_in.dM           = 0.8*dMf_star;       % mass of foreign firms
+        par_in.Pf           = 0.7*Pnow;       % price of foreign goods
+        par_in.P_autarky    = Pnow;
+        par_in.Me           = Mnow;     % update with measure from closed economy
+
+    case 'covid_frictionless'
+        par_in.dM           = 0.8*dMf_star;       % mass of foreign firms
+        par_in.Pf           = 0.7*Pnow;       % price of foreign goods
+        par_in.P_autarky    = Pnow;
+        par_in.Me           = Mnow;     % update with measure from closed economy
+end
+
     % impose kmax at value set in autarky solution
 switch model
     case 'baseline'
-
         load([mat_out '/kmax_autarky_baseline'], 'kmax_autarky')
         
     case 'frictionless'
-        
         load([mat_out '/kmax_autarky_q1_baseline'], 'kmax_autarky')
-        
+
+    case 'covid'
+        load([mat_out '/kmax_autarky_baseline'], 'kmax_autarky')
+
+    case 'covid_frictionless'
+        load([mat_out '/kmax_autarky_q1_baseline'], 'kmax_autarky')
 end
+
+
 par_in.kmax_autarky = kmax_autarky;
 clear Pnow kmax_autarky Mnow
     % solve model
@@ -175,7 +256,14 @@ switch model
     case{'frictionless'}
         disp("[baseline.m] Solve the model; entering f_PE_ss_trade_shock...")
         opened_moments = f_PE_ss_trade_shock(par_in,mat_out,'_baseline');
-        
+
+    case{'covid'}
+        disp("[baseline.m] Solve the model; entering f_PE_ss_covid_convex...")
+        opened_moments = f_PE_ss_covid_convex(par_in,mat_out,'_baseline');
+
+    case{'covid_frictionless'}
+        disp("[baseline.m] Solve the model; entering f_PE_ss_trade_shock...")
+        opened_moments = f_PE_ss_covid(par_in,mat_out,'_baseline');
 end
 
 %%% solve transition path
@@ -184,6 +272,7 @@ t_trans.T = 1;
 t_trans.Tmax = 40;
 t_trans.fixedR = par_in.fixedR;
 t_trans.Q = par_in.Q;
+
 switch model
     case 'baseline'
         disp("[baseline.m] Computing the transition path; entering f_transition_mkt_convex...")
@@ -191,7 +280,15 @@ switch model
         
     case 'frictionless'
         disp("[baseline.m] Computing the transition path; entering f_transition_mkt...")
-        f_transition_mkt('ss_autarky_q1_baseline','ss_tradeshock_q1_baseline',mat_out,t_trans,'_baseline')
+        f_transition_mkt('ss_autarky_q1_baseline','ss_tradeshock_q1_baseline', mat_out, t_trans,'_baseline')
+
+    case 'covid'
+        disp("[baseline.m] Computing the transition path; entering f_transition_mkt...")
+        f_transition_mkt_convex('ss_tradeshock_baseline','ss_covid_baseline', mat_out, t_trans,'_baseline')
+
+    case 'covid_frictionless'
+        disp("[baseline.m] Computing the transition path; entering f_transition_mkt...")
+        f_transition_mkt('ss_tradeshock_q1_baseline','ss_covid_q1_baseline', mat_out, t_trans,'_baseline')
 end
 
 

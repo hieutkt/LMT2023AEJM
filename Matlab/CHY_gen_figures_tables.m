@@ -200,7 +200,7 @@ try
     plot(0:T-1,100*(ws_plots_baseline.k_t_q1(1:T)/ws_plots_baseline.k_t_q1(1)-1), '--', 'Color', xred,'linewidth',3)
     ylabel('$K$ (\% $\Delta$ from s.s.)','FontSize',24,'interpreter','latex')
     xlabel('Years','FontSize',24,'interpreter','latex')
-    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','northeast')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
     grid on
     axis([0 T-1 -12 0])
     hold off
@@ -214,7 +214,7 @@ try
     hold off
     ylabel('$Y^{D}$($\% \Delta$ from s.s.)','FontSize',24,'interpreter','latex')
     xlabel('Years','FontSize',24,'interpreter','latex')
-    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','northeast')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
     grid on
     print('CHY_figures/fig_05_Y_domestic','-depsc')
 
@@ -225,7 +225,7 @@ try
     plot(0:T-1,100*(ws_plots_baseline.MM_t_q1(1:T)/ws_plots_baseline.MM_t_q1(1)-1), '--', 'Color', xred,'linewidth',3)
     ylabel('$M^{D}$ (\% $\Delta$ from s.s.)','FontSize',24,'interpreter','latex')
     xlabel('Years','FontSize',24,'interpreter','latex')
-    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','northeast')
+    legend({'Baseline','Frictionless'},'FontSize',20,'interpreter','latex','location','southeast')
     grid on
     axis([0 T-1 -10 0])
     hold off

@@ -1,3 +1,4 @@
+
 % master.m
 %
 %   Master file for running all models
@@ -40,10 +41,26 @@ model_baseline('baseline')
 disp("[master.m] Solving the frictionless model; Entering model_baseline.m ...")
 model_baseline('frictionless')
 
+disp("[master.m] Solving the covid model; Entering model_baseline.m ...")
+model_baseline('covid')
+
+
+disp("[master.m] Solving the covid model; Entering model_baseline.m ...")
+model_baseline('covid_frictionless')
+
+
 disp("[master.m] Extract the outputs...")
-extract_outputs('baseline/mat_files','ss_autarky_baseline','ss_tradeshock_baseline',        ...
-                'transition_baseline','ss_autarky_q1_baseline','ss_tradeshock_q1_baseline', ...
-                'transition_q1_baseline','uniform')
+extract_outputs('baseline/mat_files', ...
+                'ss_autarky_baseline','ss_tradeshock_baseline', 'transition_baseline', ...
+                'ss_autarky_q1_baseline','ss_tradeshock_q1_baseline', 'transition_q1_baseline', ...
+                'uniform')
+
+% extract_outputs('baseline/mat_files', ...
+%                 'ss_tradeshock_baseline', 'ss_covid_baseline', 'transition_baseline', ...
+%                 'ss_tradeshock_q1_baseline', 'ss_covid_q1_baseline', 'transition_q1_baseline', ...
+%                 'uniform')
+
+
 %     % run event study + i/k vs mrpk elasticity
 % disp("[master.m] run event study + i/k vs mrpk elasticity")
 % event_study('ss_autarky_baseline')
